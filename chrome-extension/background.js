@@ -38,6 +38,17 @@ chrome.alarms.onAlarm.addListener((alarm) => {
   }
 });
 
+// FEATURE: Parallel execution
+// Multiple agents running simultaneously on different sites
+async function startParallelAgents(tasks) {
+  console.log('Starting parallel agent execution for tasks:', tasks);
+  for (const task of tasks) {
+    chrome.tabs.create({ url: task.url }, (tab) => {
+      console.log(`Spawned agent tab ${tab.id} for task: ${task.name}`);
+    });
+  }
+}
+
 // Listen for messages from content scripts or popup
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   // Feature 4: Recording Mode

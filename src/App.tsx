@@ -1,10 +1,12 @@
 import { useState } from 'react';
 import { Vault } from './components/Vault';
 import { PlanReview } from './components/PlanReview';
+import { SkillsMarketplace } from './components/SkillsMarketplace';
+import { ExecutionGraph } from './components/ExecutionGraph';
 import type { PlanStep } from './components/PlanReview';
 
 function App() {
-  const [activeTab, setActiveTab] = useState<'vault' | 'plan'>('vault');
+  const [activeTab, setActiveTab] = useState<'vault' | 'plan' | 'skills' | 'execution'>('vault');
 
   const initialPlan: PlanStep[] = [
     { id: '1', action: 'navigate', description: 'Go to https://example.com' },
@@ -25,7 +27,7 @@ function App() {
           <p className="text-lg text-gray-600">Free, Local AI Browser Agent</p>
         </div>
 
-        <div className="flex space-x-4 mb-6 justify-center">
+        <div className="flex space-x-4 mb-6 justify-center flex-wrap gap-y-2">
           <button
             className={`px-4 py-2 rounded-md font-medium ${activeTab === 'vault' ? 'bg-blue-600 text-white' : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-300 shadow-sm'}`}
             onClick={() => setActiveTab('vault')}
@@ -38,10 +40,24 @@ function App() {
           >
             Plan Review
           </button>
+          <button
+            className={`px-4 py-2 rounded-md font-medium ${activeTab === 'skills' ? 'bg-blue-600 text-white' : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-300 shadow-sm'}`}
+            onClick={() => setActiveTab('skills')}
+          >
+            Skills Marketplace
+          </button>
+          <button
+            className={`px-4 py-2 rounded-md font-medium ${activeTab === 'execution' ? 'bg-blue-600 text-white' : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-300 shadow-sm'}`}
+            onClick={() => setActiveTab('execution')}
+          >
+            Execution Graph
+          </button>
         </div>
 
         {activeTab === 'vault' && <Vault />}
         {activeTab === 'plan' && <PlanReview initialPlan={initialPlan} onExecute={handleExecutePlan} />}
+        {activeTab === 'skills' && <SkillsMarketplace />}
+        {activeTab === 'execution' && <ExecutionGraph />}
       </div>
     </div>
   );

@@ -139,8 +139,29 @@ function checkFor2FAPrompt() {
   }
 }
 
+// ---------------------------------------------------------
+// FEATURE: Session replay (debugging) / Audit
+// ---------------------------------------------------------
+function captureScreenshotForAudit() {
+  // In a real implementation, we would use chrome.tabs.captureVisibleTab
+  // and store it in indexedDB or Supabase for debugging failed tasks.
+  console.log('Captured snapshot for audit log.');
+}
+
+// ---------------------------------------------------------
+// FEATURE: On-page writing assistant / Context Menu Trigger
+// ---------------------------------------------------------
+document.addEventListener('contextmenu', (e) => {
+  const selection = window.getSelection().toString();
+  if (selection.length > 0) {
+    // Mock sending selection to background to show "Improve with Hubtique" option
+    console.log(`Text selected for Hubtique assistant: "${selection}"`);
+  }
+});
+
 // Run checks on load
 setTimeout(() => {
   showContextualSuggestions();
   checkFor2FAPrompt();
+  captureScreenshotForAudit();
 }, 2000);
